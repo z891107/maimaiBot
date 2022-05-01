@@ -1,6 +1,8 @@
-const maimai = require('./maimai.js');
-const config = require('../config.json').maimai;
-const { MessageEmbed } = require('discord.js');
+import maimai from './maimai.js';
+import { MessageEmbed } from 'discord.js';
+
+import _config from '../config.json' assert { type: 'json' };
+const config = _config.maimai;
 
 var route = {};
 route.lineCommandRouter = {};
@@ -83,7 +85,7 @@ route.Update = async res => {
             rating: newRating,
             songRecords: newSongRecords
         };
-    }));
+    }), { concurrency: 6 });
 
     console.log("Update OK");
 };
@@ -167,4 +169,4 @@ route.lineCommandRouter['help'] = (req, res) => {
     res.reply(message);
 };*/
 
-module.exports = route;
+export default route;

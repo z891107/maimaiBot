@@ -6,15 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type" : "commonjs",
+  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
     "axios": "^0.27.0",
+    "bluebird": "^3.7.2",
     "cheerio": "^1.0.0-rc.10",
     "discord-api-types": "^0.32.0",
-    "discord.js": "^13.6.0"
+    "discord.js": "^13.6.0",
+    "p-limit": "^4.0.0"
   }
 }

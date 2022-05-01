@@ -13487,4 +13487,4 @@ maimaiSongs.GetRandomSong = (minLv, maxLv) => {
     return songs[getRandom(0, songs.length - 1)];
 }
 
-module.exports = maimaiSongs;
+export default maimaiSongs;

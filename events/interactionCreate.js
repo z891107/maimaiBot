@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'interactionCreate',
     async execute(interaction) {
         if (!interaction.isCommand()) return;

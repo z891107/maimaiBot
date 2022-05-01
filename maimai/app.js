@@ -1,6 +1,8 @@
-const route = require('./route.js');
-const config = require('../config.json').maimai;
-const sleep = require('../utilities/sleep.js');
+import route from './route.js';
+import sleep from '../utilities/sleep.js';
+
+import _config from '../config.json' assert { type: 'json' };
+const config = _config.maimai;
 
 var app = {};
 
@@ -33,5 +35,5 @@ app.start = bot => {
     });
 }
 
-module.exports = app;
+export default app;
 

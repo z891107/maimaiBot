@@ -1,7 +1,9 @@
-const cheerio = require('cheerio');
-const { default: axios } = require('axios');
-const maimaiSongs = require('./maimaisongs.js');
-const { id, password } = require('../secretConfig.json').maimai.auth;
+import cheerio from 'cheerio';
+import axios from 'axios';
+import maimaiSongs from './maimaisongs.js';
+
+import _config from '../secretConfig.json' assert { type: 'json' };
+const { id, password } = _config.maimai.auth;
 
 var maimai = {};
 
@@ -259,4 +261,4 @@ maimai.GetPlayerProfileById = async (id, isSelf) => {
     };
 };
 
-module.exports = maimai;
+export default maimai;
