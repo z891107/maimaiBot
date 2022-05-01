@@ -1,11 +1,14 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import axios from 'axios';
 import maimaiSongs from './maimaisongs.js';
+import pLimit from 'p-limit';
 
 import _config from '../secretConfig.json' assert { type: 'json' };
 const { id, password } = _config.maimai.auth;
 
 var maimai = {};
+
+const limit = pLimit(5);
 
 const maimaiLoginPage = "https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=maimaidxex&redirect_url=https://maimaidx-eng.com/maimai-mobile/&back_url=https://maimai.sega.com/";
 const maimaiLogin = {
@@ -191,7 +194,7 @@ maimai.RefreshCookie = async () => {
 }
 
 maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
-    var response = await maimaiPage("/friend/friendGenreVs/battleStart/", {
+    var response = await limit( () => maimaiPage("/friend/friendGenreVs/battleStart/", {
         headers: {
             'Cookie': maimaiCookies
         },
@@ -199,7 +202,7 @@ maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
             'diff': difficulty,
             'idx': id,
         }
-    });
+    }));
 
     if (response.status == 302) {
         throw new Error("GetSongRecordsByIdAndDifficulty(): got HTTP 302");
@@ -242,14 +245,14 @@ maimai.GetSongRecordsById = async (id, isSelf) => {
 };
 
 maimai.GetPlayerProfileById = async (id, isSelf) => {
-    var response = await maimaiPage("/friend/friendGenreVs/", {
+    var response = await limit( () => maimaiPage("/friend/friendGenreVs/", {
         headers: {
             'Cookie': maimaiCookies
         },
         params: {
             'idx': id,
         }
-    });
+    }));
 
     var $ = cheerio.load(response.data);
 
