@@ -216,9 +216,11 @@ maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
         var scoreIndex = isSelf ? 0 : 1;
 
         var commentSelector = isSelf ? ".t_l .h_30" : ".t_r .h_30";
-        var commentIconURLs = Array.from({length: 2}, (_, i) => $(obj).find(commentSelector).eq(i + 1).attr('src'));
-        var commentText = "";
-        commentIconURLs.forEach(url => commentText += COMMENT_URL_TO_TEXT[url] ? COMMENT_URL_TO_TEXT[url] + " " : "");
+        var commentBaseIndex = isSelf ? 1 : 0;
+        var commentIconURLs = Array.from(
+            {length: 2}, 
+            (_, i) => $(obj).find(commentSelector).eq(commentBaseIndex + i).attr('src')
+        );
 
         return {
             title: $(obj).find('.music_name_block').text().trim(),
