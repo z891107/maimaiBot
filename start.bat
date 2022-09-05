@@ -1,0 +1,1 @@
+node --experimental-json-modules ./bot.js
