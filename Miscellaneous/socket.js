@@ -11,7 +11,11 @@ socket.start = () => {
 
     server.on('connection', function () {
         console.log('TCP get connection')
-    })
+    });
+
+    server.on('error', function (e) {
+        console.log("Socket error:", e);
+    });
 };
 
 export default socket;
