@@ -32,6 +32,10 @@ app.start = bot => {
         }, 180 * 1000);
     
         callback();
+    }).catch(async (e) => {
+        console.log(e);
+        await sleep(5 * 60 * 1000);
+        app.start(bot);
     });
 }
 
