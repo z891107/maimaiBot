@@ -9,12 +9,12 @@ socket.start = () => {
         console.log('TCP Server start');
     });
 
-    server.on('connection', function () {
-        console.log('TCP get connection')
-    });
+    server.on('connection', function (client) {
+        console.log('TCP get connection');
 
-    server.on('error', function (e) {
-        console.log("Socket error:", e);
+        client.on('error', function (e) {
+            console.log("Socket error:");
+        })
     });
 };
 
