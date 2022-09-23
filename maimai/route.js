@@ -10,8 +10,6 @@ route.lineCommandRouter = {};
 var playersData = [];
 
 route.Init = async () => {
-    console.log("Init Start");
-
     var players = config.players;
 
     await maimai.RefreshCookie();
@@ -26,13 +24,9 @@ route.Init = async () => {
             songRecords
         };
     }));
-
-    console.log("Init OK");
 };
 
 route.Update = async res => {
-    console.log("Update Start");
-
     await maimai.RefreshCookie();
     playersData = await Promise.all(playersData.map(async PlayerData => {
         var oldRating = PlayerData.rating;
@@ -86,8 +80,6 @@ route.Update = async res => {
             songRecords: newSongRecords
         };
     }), { concurrency: 6 });
-
-    console.log("Update OK");
 };
 
 route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newSongRecords, oldSongRecords}) => {
