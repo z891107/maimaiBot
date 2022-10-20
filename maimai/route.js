@@ -102,8 +102,25 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
     message.setDescription(`Rating: \`${newRating}\` ${ratingChange}`);
 
     for (var i = 0; i < newSongRecords.length; i++) {
-        var regex = /[" ""　"]/g;
-        var songURL = `https://maimai.fandom.com/zh/wiki/${newSongRecords[i].title.replaceAll(regex, "_")}`;
+        var ambiguousTextes = [
+            {
+                originRegex: /[" ""　"]/g,
+                changed: "_" 
+            },
+            {
+                originRegex: /["［"]/,
+                changed: "[" 
+            },
+            {
+                originRegex: /["］"]/,
+                changed: "]" 
+            }
+        ];
+        var changedSongTitle = newSongRecords[i].title;
+        for (let ambiguousText of ambiguousTextes) {
+            changedSongTitle = changedSongTitle.replaceAll(ambiguousText.originRegex, ambiguousText.changed);
+        }
+        var songURL = `https://maimai.fandom.com/zh/wiki/${changedSongTitle}`;
 
         var songTitle = newSongRecords[i].title + (newSongRecords[i].isDX ? " (DX)" : "");
 
