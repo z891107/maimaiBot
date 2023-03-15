@@ -108,12 +108,12 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
                 changed: "_" 
             },
             {
-                originRegex: /["［"]/,
-                changed: "[" 
+                originRegex: /["["]/g,
+                changed: "［" 
             },
             {
-                originRegex: /["］"]/,
-                changed: "]" 
+                originRegex: /["]"]/g,
+                changed: "］" 
             }
         ];
         var changedSongTitle = newSongRecords[i].title;

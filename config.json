@@ -42,6 +42,39 @@
             {
                 "id": 7049937547980,
                 "name": "LazaR"
+            },
+			{
+                "id": 8069734129997,
+                "name": "Arsene"
+            },
+            {
+                "id": 7052608873204,
+                "name": "SUS"
+            },
+			{
+				"id": 8045916633769,
+				"name": "MH-Chumi"
+			},
+			{
+				"id": 9002991417248,
+				"name": "地中豆"
+			},
+            {
+				"id": 6096912068291,
+				"name": "CH1GUNYA"
+			},
+            {
+				"id": 8079312036166,
+				"name": "SPY"
+			}
+        ]
+    },
+    "taiko": {
+        "pushChannelId": "968163381422993428",
+        "players": [
+            {
+                "loginCookie": "_token_v2=6fcaii9s67p0493hqe2bo1iie6",
+                "name": "Taroegg"
             }
         ]
     }

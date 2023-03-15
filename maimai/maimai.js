@@ -8,7 +8,7 @@ const { id, password } = _config.maimai.auth;
 
 var maimai = {};
 
-const limit = pLimit(5);
+const limit = pLimit(3);
 
 const maimaiLoginPage = "https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=maimaidxex&redirect_url=https://maimaidx-eng.com/maimai-mobile/&back_url=https://maimai.sega.com/";
 const maimaiLogin = {
@@ -86,27 +86,27 @@ const ACHIEVEMENTS_INFO = [
     {
         minAchv: 100.5,
         factor: 22.4,
-        text: "<:icon_sss_plus:968891657820991488>"
+        text: "<:sss1:969199922299670538><:sss2:969199922345803826><:sssplus3:969199922081591347>"
     }, {
         minAchv: 100,
         factor: 21.6,
-        text: "<:icon_sss:968888794210238474>"
+        text: "<:sss1:969199922299670538><:sss2:969199922345803826><:sss3:969201603959738388>"
     }, {
         minAchv: 99.5,
         factor: 21.1,
-        text: "<:icon_ss_plus:968890922714665020>"
+        text: "<:ss1:969203251629162546><:ss2:969203251658489916><:ssplus3:969203251675275314>"
     }, {
         minAchv: 99,
         factor: 20.8,
-        text: "<:icon_ss:968893447375323198>"
+        text: "<:ss1:969203251629162546><:ss2:969203251658489916><:ss3:969203796074983485>"
     }, {
         minAchv: 98,
         factor: 20.3,
-        text: "<:icon_s_plus:968895173348163614>"
+        text: "<:s1:1022892695687020564><:splus2:969204684394987591><:splus3:969204684764110898>"
     }, {
         minAchv: 97,
         factor: 20,
-        text: "<:icon_s:968896246842540122>"
+        text: "<:s1:1022892695687020564><:s2:969205596815499335>"
     }, {
         minAchv: 94,
         factor: 16.8,
@@ -143,14 +143,14 @@ const ACHIEVEMENTS_INFO = [
 ];
 
 const COMMENT_URL_TO_TEXT = {
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fc.png?ver=1.10" : "<:music_icon_fc:968830806229409873>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fcp.png?ver=1.10" : "<:music_icon_fcp:968830814643163167>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_ap.png?ver=1.10" : "<:music_icon_ap:968830822872403978>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_app.png?ver=1.10" : "<:music_icon_app:968830831802064966>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fs.png?ver=1.10" : "<:music_icon_fs:968830839230177310>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsp.png?ver=1.10" : "<:music_icon_fsp:968830846800887822>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsd.png?ver=1.10" : "<:music_icon_fsd:968830861569060885>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsdp.png?ver=1.10" : "<:music_icon_fsdp:968830874625921046>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fc.png?ver=1.25" : "<:music_icon_fc:1022882660680482816>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fcp.png?ver=1.25" : "<:music_icon_fcp:968830814643163167>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_ap.png?ver=1.25" : "<:music_icon_ap:968830822872403978>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_app.png?ver=1.25" : "<:music_icon_app:968830831802064966>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fs.png?ver=1.25" : "<:music_icon_fs:968830839230177310>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsp.png?ver=1.25" : "<:music_icon_fsp:968830846800887822>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsd.png?ver=1.25" : "<:music_icon_fsd:968830861569060885>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsdp.png?ver=1.25" : "<:music_icon_fsdp:968830874625921046>",
 };
 
 maimai.GetDefficultyText = i => DIFFICULTIES_INFO[i].text;
@@ -190,7 +190,6 @@ maimai.RefreshCookie = async () => {
 
     response = await axios(maimaiGetAnotherCookie);
     maimaiCookies = response.headers['set-cookie'];
-    console.log(maimaiCookies);
 }
 
 maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
@@ -237,7 +236,7 @@ maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
 maimai.GetSongRecordsById = async (id, isSelf) => {
     var songsRecords = [];
 
-    for (let difficulty = 1; difficulty <= 4; difficulty++) {
+    for (let difficulty = 2; difficulty <= 4; difficulty++) {
         var s = await maimai.GetSongRecordsByIdAndDifficulty(id, isSelf, difficulty);
 
         songsRecords.push(...s);
