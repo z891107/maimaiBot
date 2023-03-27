@@ -76,6 +76,10 @@ const DIFFICULTIES_INFO = [
         officialText: "remaster",
         text: "<:diff_remaster1:968899208423821362><:diff_remaster2:968899208314748979><:diff_remaster3:968901783160225833><:diff_remaster4:968901798431719485><:diff_remaster5:968902398573699112>"
     },
+    {
+        officialText: "remaster",
+        text: "<:diff_remaster1:968899208423821362><:diff_remaster2:968899208314748979><:diff_remaster3:968901783160225833><:diff_remaster4:968901798431719485><:diff_remaster5:968902398573699112>"
+    },
 ];
 
 const ACHIEVEMENTS_INFO = [
