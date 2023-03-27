@@ -6,7 +6,7 @@ const config = _config.maimai;
 
 var app = {};
 
-const excludeUpdateTimeRange = ['02:55', '06:05'];
+const excludeUpdateTimeRange = ['03:00', '06:00'];
 
 var IsMaimaiNETMaintain = (time) => {
     return time >= excludeUpdateTimeRange[0] && time <= excludeUpdateTimeRange[1];
