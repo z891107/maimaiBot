@@ -8,7 +8,7 @@ const { id, password } = _config.maimai.auth;
 
 var maimai = {};
 
-const limit = pLimit(3);
+const limit = pLimit(1);
 
 const maimaiLoginPage = "https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=maimaidxex&redirect_url=https://maimaidx-eng.com/maimai-mobile/&back_url=https://maimai.sega.com/";
 const maimaiLogin = {
