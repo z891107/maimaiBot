@@ -143,28 +143,23 @@ const ACHIEVEMENTS_INFO = [
 ];
 
 const COMMENT_URL_TO_TEXT = {
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fc.png?ver=1.25" : "<:music_icon_fc:1022882660680482816>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fcp.png?ver=1.25" : "<:music_icon_fcp:968830814643163167>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_ap.png?ver=1.25" : "<:music_icon_ap:968830822872403978>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_app.png?ver=1.25" : "<:music_icon_app:968830831802064966>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fs.png?ver=1.25" : "<:music_icon_fs:968830839230177310>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsp.png?ver=1.25" : "<:music_icon_fsp:968830846800887822>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsd.png?ver=1.25" : "<:music_icon_fsd:968830861569060885>",
-    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsdp.png?ver=1.25" : "<:music_icon_fsdp:968830874625921046>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fc.png" : "<:music_icon_fc:1022882660680482816>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fcp.png" : "<:music_icon_fcp:968830814643163167>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_ap.png" : "<:music_icon_ap:968830822872403978>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_app.png" : "<:music_icon_app:968830831802064966>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fs.png" : "<:music_icon_fs:968830839230177310>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsp.png" : "<:music_icon_fsp:968830846800887822>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsd.png" : "<:music_icon_fsd:968830861569060885>",
+    "https://maimaidx-eng.com/maimai-mobile/img/music_icon_fsdp.png" : "<:music_icon_fsdp:968830874625921046>",
 };
 
 maimai.GetDefficultyText = i => DIFFICULTIES_INFO[i].text;
 
 maimai.GetAchievementText = achv => {
     achv = Number(achv.slice(0, -1));
-
-    if (ACHIEVEMENTS_INFO[0].minAchv <= achv) {
-        return ACHIEVEMENTS_INFO[0].text;
-    }
     
-    for (let i = 1; i < ACHIEVEMENTS_INFO.length; i++) {
-        if (ACHIEVEMENTS_INFO[i - 1].minAchv > achv && 
-            ACHIEVEMENTS_INFO[i].minAchv <= achv) {
+    for (let i = 0; i < ACHIEVEMENTS_INFO.length; i++) {
+        if (ACHIEVEMENTS_INFO[i].minAchv <= achv) {
                 return ACHIEVEMENTS_INFO[i].text;
             }
     }
@@ -218,7 +213,7 @@ maimai.GetSongRecordsByIdAndDifficulty = async (id, isSelf, difficulty) => {
         var commentsIndex = isSelf ? [1, 2] : [1, 0];
         var commentIconURLs = Array.from(
             {length: 2}, 
-            (_, i) => $(obj).find(commentSelector).eq(commentsIndex[i]).attr('src')
+            (_, i) => $(obj).find(commentSelector).eq(commentsIndex[i]).attr('src').substring(0,$(obj).find(commentSelector).eq(commentsIndex[i]).attr('src').indexOf("?ver"))
         );
 
         return {
