@@ -140,6 +140,10 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
         }
     }
 
+    if(newRating-oldRating >= 10){
+        message.setImage("https://stickershop.line-scdn.net/stickershop/v1/sticker/364543447/android/sticker.png");
+    }
+
     console.log(message);
 
     res.send({ embeds: [ message ] });
