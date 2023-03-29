@@ -149,7 +149,7 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
         }
 	
 	for (let broadcast of config.broadcasts) {
-	    let isCommentMatched = !broadcast.comment || (broadcast.comment == newCommentForCombo || broadcast.comment == newCommentForSync);
+	    let isCommentMatched = !broadcast.comment || (newCommentForCombo.includes(broadcast.comment) || newCommentForSync.includes(broadcast.comment));
 	    let isDeltaRatingMatched = !broadcast.deltaRating || (broadcast.deltaRating <= newRating - oldRating);
 	    
 	    if (isCommentMatched && isDeltaRatingMatched) {
