@@ -82,6 +82,10 @@
         ],
         "broadcasts": [
             {
+                "comment": "fsdp",
+                "image_url": "https://tenor.com/view/ayame-hololive-gif-22713896"
+            },
+            {
                 "comment": "app",
                 "image_url": "https://tenor.com/view/nakiri-ayame-nakiri-ayame-hologra-hololive-gif-19289616"
             },
