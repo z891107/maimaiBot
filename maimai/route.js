@@ -30,10 +30,10 @@ route.Update = async res => {
     await maimai.RefreshCookie();
     playersData = await Promise.all(playersData.map(async PlayerData => {
         var oldRating = PlayerData.rating;
-        var { rating: newRating, iconURL } = await maimai.GetPlayerProfileById(PlayerData.id, PlayerData.isSelf);
         var BreakSongRecordList = { new: [], old: [] };
         var oldSongRecords = PlayerData.songRecords;
         var newSongRecords = await maimai.GetSongRecordsById(PlayerData.id, PlayerData.isSelf);
+        var { rating: newRating, iconURL } = await maimai.GetPlayerProfileById(PlayerData.id, PlayerData.isSelf);
 
         /*if (PlayerData.name == "阿咪") {
             for (let i = 0; i < newSongRecords.length; i++) {
@@ -61,6 +61,10 @@ route.Update = async res => {
                 BreakSongRecordList.new.push(newSongRecords[i]);
                 BreakSongRecordList.old.push(oldSongRecords[i]);
             }
+        }
+
+        if (BreakSongRecordList.new.length == 0){
+            newRating = oldRating;
         }
 
         route.OnBreakRecord({
@@ -93,6 +97,11 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
 	.setTimestamp();
 
     var ratingChange = newRating - oldRating == 0 ? "" : `\`+${newRating - oldRating}\``;
+    var broadcastFlag = []
+    var broadcast_config = config.broadcast;
+
+    for (let i=0;i<broadcast_config.length; i++) 
+        broadcastFlag.push(false);
 
     message.setAuthor({ 
         name: playerName, 
@@ -134,14 +143,36 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
         }
         if (oldSongRecords[i].commentForCombo != newSongRecords[i].commentForCombo) {
             message.addField("Combo", newSongRecords[i].commentForCombo, true);
+            for(let i=0;i<2;i++)
+            {
+                if(newSongRecords[i].commentForCombo.includes(config.broadcast[i].goal))
+                {
+                    broadcastFlag[i]=true;
+                    break;
+                }
+            }
         }
         if (oldSongRecords[i].commentForSync != newSongRecords[i].commentForSync) {
             message.addField("Sync", newSongRecords[i].commentForSync, true);
         }
     }
 
-    if(newRating-oldRating >= 10){
-        message.setImage("https://stickershop.line-scdn.net/stickershop/v1/sticker/364543447/android/sticker.png");
+    for(let i=2;i<broadcast_config.length;i++)
+    {
+        if(newRating-oldRating >= broadcast_config[i].value)
+        {
+            broadcastFlag[i]=true;
+            break;
+        }
+    }
+
+    for(let i=0;i<broadcastFlag.length;i++)
+    {
+        if(broadcastFlag[i])
+        {
+            message.setImage(broadcast_config[i].image_url);
+            break;
+        }
     }
 
     console.log(message);
