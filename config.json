@@ -25,7 +25,7 @@
             },
             {
                 "id": 8064738120492,
-                "name": "枕頭"
+                "name": "金桃"
             },
             {
                 "id": 8059250870020,
@@ -66,7 +66,41 @@
             {
 				"id": 8079312036166,
 				"name": "SPY"
+			},
+            {
+                "id": 7087084152558,
+                "name": "AIKON"
+            },
+            {
+				"id": 8039343153433,
+				"name": "軒姊"
+			},
+            {
+				"id": 9002528590406,
+				"name": "ㄅㄐ"
 			}
+        ],
+        "broadcast": [
+            {
+                "goal": "app",
+                "image_url": "https://tenor.com/view/nakiri-ayame-nakiri-ayame-hologra-hololive-gif-19289616"
+            },
+            {
+                "goal": "ap",
+                "image_url": "https://tenor.com/view/hololive-vtuber-gif-18560323"
+            },
+            {
+                "value": 20,
+                "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543447/android/sticker.png"
+            },
+            {
+                "value": 10,
+                "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543455/android/sticker.png"
+            },
+            {
+                "value": 5,
+                "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543439/android/sticker.png"
+            }
         ]
     },
     "taiko": {
