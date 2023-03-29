@@ -104,6 +104,8 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
         url: `https://maimaidx-eng.com/maimai-mobile/friend/friendGenreVs/?idx=${id}` 
     });
     message.setDescription(`Rating: \`${newRating}\` ${ratingChange}`);
+    
+    let broadcastIndex = Number.MAX_SAFE_INTEGER;
 
     for (var i = 0; i < newSongRecords.length; i++) {
         var ambiguousTextes = [
@@ -148,16 +150,24 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
             message.addField("Sync", newSongRecords[i].commentForSync, true);
         }
 	
-	for (let broadcast of config.broadcasts) {
+	config.broadcasts.every((broadcast, index) => {
+	    if (index >= broadcastIndex) {
+	    	return false;
+	    }
+	
 	    let isCommentMatched = !broadcast.comment || (newCommentForCombo.includes(broadcast.comment) || newCommentForSync.includes(broadcast.comment));
 	    let isDeltaRatingMatched = !broadcast.deltaRating || (broadcast.deltaRating <= newRating - oldRating);
 	    
 	    if (isCommentMatched && isDeltaRatingMatched) {
-	        message.setImage(broadcast.image_url);
-                break;
+	    	broadcastIndex = index;
+                return false;
 	    }
-	}
+	    
+	    return true;
+	});
     }
+    
+    message.setImage(config.broadcasts[broadcastIndex].image_url);
 
     console.log(message);
 
