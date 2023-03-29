@@ -97,11 +97,6 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
 	.setTimestamp();
 
     var ratingChange = newRating - oldRating == 0 ? "" : `\`+${newRating - oldRating}\``;
-    var broadcastFlag = []
-    var broadcast_config = config.broadcast;
-
-    for (let i=0;i<broadcast_config.length; i++) 
-        broadcastFlag.push(false);
 
     message.setAuthor({ 
         name: playerName, 
@@ -141,38 +136,27 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
             `\`${oldSongRecords[i].score}\` ➡️ \`${newSongRecords[i].score}\` \n${scoreText}`, 
             true);
         }
+	
+	let newCommentForCombo;
+	let newCommentForSync;
         if (oldSongRecords[i].commentForCombo != newSongRecords[i].commentForCombo) {
+	    newCommentForCombo = newSongRecords[i].commentForCombo;
             message.addField("Combo", newSongRecords[i].commentForCombo, true);
-            for(let i=0;i<2;i++)
-            {
-                if(newSongRecords[i].commentForCombo.includes(config.broadcast[i].goal))
-                {
-                    broadcastFlag[i]=true;
-                    break;
-                }
-            }
         }
         if (oldSongRecords[i].commentForSync != newSongRecords[i].commentForSync) {
+	    newCommentForSync = newSongRecords[i].commentForSync;
             message.addField("Sync", newSongRecords[i].commentForSync, true);
         }
-    }
-
-    for(let i=2;i<broadcast_config.length;i++)
-    {
-        if(newRating-oldRating >= broadcast_config[i].value)
-        {
-            broadcastFlag[i]=true;
-            break;
-        }
-    }
-
-    for(let i=0;i<broadcastFlag.length;i++)
-    {
-        if(broadcastFlag[i])
-        {
-            message.setImage(broadcast_config[i].image_url);
-            break;
-        }
+	
+	for (let broadcast of config.broadcasts) {
+	    let isCommentMatched = !broadcast.comment || (broadcast.comment == newCommentForCombo || broadcast.comment == newCommentForSync);
+	    let isDeltaRatingMatched = !broadcast.deltaRating || (broadcast.deltaRating <= newRating - oldRating);
+	    
+	    if (isCommentMatched && isDeltaRatingMatched) {
+	        message.setImage(broadcast.image_url);
+                break;
+	    }
+	}
     }
 
     console.log(message);
