@@ -82,23 +82,23 @@
         ],
         "broadcast": [
             {
-                "goal": "app",
+                "comment": "app",
                 "image_url": "https://tenor.com/view/nakiri-ayame-nakiri-ayame-hologra-hololive-gif-19289616"
             },
             {
-                "goal": "ap",
+                "comment": "ap",
                 "image_url": "https://tenor.com/view/hololive-vtuber-gif-18560323"
             },
             {
-                "value": 20,
+                "deltaRating": 20,
                 "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543447/android/sticker.png"
             },
             {
-                "value": 10,
+                "deltaRating": 10,
                 "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543455/android/sticker.png"
             },
             {
-                "value": 5,
+                "deltaRating": 5,
                 "image_url": "https://stickershop.line-scdn.net/stickershop/v1/sticker/364543439/android/sticker.png"
             }
         ]
