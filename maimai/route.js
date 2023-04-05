@@ -63,7 +63,7 @@ route.Update = async res => {
             }
         }
 
-        if (BreakSongRecordList.new.length == 0){
+        if (BreakSongRecordList.new.length == 0) {
             newRating = oldRating;
         }
 
@@ -75,7 +75,7 @@ route.Update = async res => {
             newRating,
             iconURL,
             newSongRecords: BreakSongRecordList.new,
-            oldSongRecords:BreakSongRecordList.old
+            oldSongRecords: BreakSongRecordList.old
         });
 
         return {
@@ -86,40 +86,40 @@ route.Update = async res => {
     }), { concurrency: 6 });
 };
 
-route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newSongRecords, oldSongRecords}) => {
+route.OnBreakRecord = ({ res, playerName, id, oldRating, newRating, iconURL, newSongRecords, oldSongRecords }) => {
     if (newSongRecords.length == 0) {
         return;
     }
 
     const message = new MessageEmbed()
-	.setColor('#0099ff')
-    .setThumbnail(iconURL)
-	.setTimestamp();
+        .setColor('#0099ff')
+        .setThumbnail(iconURL)
+        .setTimestamp();
 
     var ratingChange = newRating - oldRating == 0 ? "" : `\`+${newRating - oldRating}\``;
 
-    message.setAuthor({ 
-        name: playerName, 
-        iconURL: iconURL, 
-        url: `https://maimaidx-eng.com/maimai-mobile/friend/friendGenreVs/?idx=${id}` 
+    message.setAuthor({
+        name: playerName,
+        iconURL: iconURL,
+        url: `https://maimaidx-eng.com/maimai-mobile/friend/friendGenreVs/?idx=${id}`
     });
     message.setDescription(`Rating: \`${newRating}\` ${ratingChange}`);
-    
+
     let broadcastIndex = Number.MAX_SAFE_INTEGER;
 
     for (var i = 0; i < newSongRecords.length; i++) {
         var ambiguousTextes = [
             {
                 originRegex: /[" ""　"]/g,
-                changed: "_" 
+                changed: "_"
             },
             {
                 originRegex: /["["]/g,
-                changed: "［" 
+                changed: "［"
             },
             {
                 originRegex: /["]"]/g,
-                changed: "］" 
+                changed: "］"
             }
         ];
         var changedSongTitle = newSongRecords[i].title;
@@ -134,44 +134,46 @@ route.OnBreakRecord = ({res, playerName, id, oldRating, newRating, iconURL, newS
 
         if (oldSongRecords[i].score != newSongRecords[i].score) {
             var scoreText = maimai.GetAchievementText(newSongRecords[i].score);
-            message.addField("Rank", 
-            `\`${oldSongRecords[i].score}\` ➡️ \`${newSongRecords[i].score}\` \n${scoreText}`, 
-            true);
+            message.addField("Rank",
+                `\`${oldSongRecords[i].score}\` ➡️ \`${newSongRecords[i].score}\` \n${scoreText}`,
+                true);
         }
-	
-	let newCommentForCombo;
-	let newCommentForSync;
+
+        let newCommentForCombo = "";
+        let newCommentForSync = "";
         if (oldSongRecords[i].commentForCombo != newSongRecords[i].commentForCombo) {
-	    newCommentForCombo = newSongRecords[i].commentForCombo;
+            newCommentForCombo = newSongRecords[i].commentForCombo;
             message.addField("Combo", newSongRecords[i].commentForCombo, true);
         }
         if (oldSongRecords[i].commentForSync != newSongRecords[i].commentForSync) {
-	    newCommentForSync = newSongRecords[i].commentForSync;
+            newCommentForSync = newSongRecords[i].commentForSync;
             message.addField("Sync", newSongRecords[i].commentForSync, true);
         }
-	
-	config.broadcasts.every((broadcast, index) => {
-	    if (index >= broadcastIndex) {
-	    	return false;
-	    }
-	
-	    let isCommentMatched = !broadcast.comment || (newCommentForCombo.includes(broadcast.comment) || newCommentForSync.includes(broadcast.comment));
-	    let isDeltaRatingMatched = !broadcast.deltaRating || (broadcast.deltaRating <= newRating - oldRating);
-	    
-	    if (isCommentMatched && isDeltaRatingMatched) {
-	    	broadcastIndex = index;
+
+        config.broadcasts.every((broadcast, index) => {
+            if (index >= broadcastIndex) {
                 return false;
-	    }
-	    
-	    return true;
-	});
+            }
+
+            let isCommentMatched = !broadcast.comment || (newCommentForCombo.includes(broadcast.comment) || newCommentForSync.includes(broadcast.comment));
+            let isDeltaRatingMatched = !broadcast.deltaRating || (broadcast.deltaRating <= newRating - oldRating);
+
+            if (isCommentMatched && isDeltaRatingMatched) {
+                broadcastIndex = index;
+                return false;
+            }
+
+            return true;
+        });
     }
-    
-    message.setImage(config.broadcasts[broadcastIndex].image_url);
+
+    if (broadcastIndex != Number.MAX_SAFE_INTEGER) {
+        message.setImage(config.broadcasts[broadcastIndex].image_url);
+    }
 
     console.log(message);
 
-    res.send({ embeds: [ message ] });
+    res.send({ embeds: [message] });
 };
 /*
 route.lineCommandRouter['random'] = (req, res) => {
